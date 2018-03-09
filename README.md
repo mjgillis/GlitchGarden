@@ -1,399 +1,87 @@
-### Introduction To Glitch Garden ###
+## Introduction ##
 
-**LEARNING OBJECTIVES**
+My first project in learning Unity development is the creation of a Plants vs. Zombies clone. I’ll be the first to admit this isn’t the most polished game, but everyone starts somewhere. For each of my projects I’m going to try to describe what I was aiming to accomplish out of the project, what I learned from the project, and share as much of the project as I can. I’ve included the entire project for this game on GitHub. If you’re interested, scroll to the last section on final thoughts for the link to GitHub.
 
-+ MAJOR: **2D Animation (frame, and rigged)**
-+ Minor A: **Mobile** compatible, no keyboard use.
-+ Minor B: **Components** to make code extendable.
-+ Minor C: **Options Menu** scene & PlayerPrefs.
+## Game Mechanics  ##
 
-### Section 7 Game Design Document ###
+The idea is enemies generate on the right side of the screen and travel to the left side of the screen. The objective is to defend them from reaching the other side. You win the level when the timed slider at the top completes. There are three separate levels with varying difficulties that introduce new enemy and defender characters.
 
+#### Defenders ####
 
+Defenders are characters you choose to defend your garden from being invaded by attackers. Each defender has special characteristics to help fend off oncoming attackers and are available at different levels.
 
-### Your Glitch Garden Assets ###
+_Star Trophy – HP 100 / AP 0 / Star Cost 40_
 
+The star trophy is the economic engine of the game. It generate stars that allow you to purchase other defenders. Each star takes 10 seconds to generate and provides 10 star points. By default you start with 100 stars to spend. It has 100 health to withstand early attacks, and is available in all levels.
 
+_Cactus – HP 100 / AP 10 / Star Cost 10_
 
-### Section 7 Notes ###
+The Cactus is the first defender that can attack enemies as they spawn. It fires a zucchini towards oncoming attackers and deals 10 damage. The cactus also has 100 health to withstand early attacks, and is available in all levels.
 
+_Gravestone – HP 200 / AP 0 / Star Cost 30_
 
+The Gravestone is the tank defender. It does not directly deal any damage, but has high health to protect the defenders behind it from lizards. The one weakness it has is that the fox is able to jump over the Gravestone and continue to attack the defenders behind it. The Gravestone becomes available starting in level 2.
 
-### Making A Splash Screen ###
+_Gnome – HP 100 / AP 25 / Star Cost 20_
 
-+ What is a splash screen
-+ Why use a splash screen
-+ Singleton-free music manager
-+ Make you splash-screen
-+ Add music, and make Start Menu auto-load
-  
-**Useful links**  
-+ **Fonts**: [dafont.com](http://www.dafont.com/)
-+ **Sound**: [Freesound.org](http://www.freesound.org/)
+The Gnome is the elite attack defender. It throws a powerful axe at oncoming attackers, dealing 25 damage. While a little slower traveling than the zucchini the Cactus throws, it still provides ROI on DPS for its cost compared to the Cactus. The gnome has the same health as a Cactus at 100 and costs twice as much for his increased damage, but is not available until the final level.
 
-### Scaling & Aspect Ratios ###
+#### Attackers ####
+Attackers spawn on the screen and try to invade the garden to the left of the screen. The walk towards the garden at different speeds and have their own special characteristics explained below.
 
-+ We're building for “mobile first” here.
-+ No use of keyboard, just tap & drag.
-+ Mobile device aspect ratios.
+_Lizard – HP 50 / AP 20_
 
-**Useful Links**  
-+ [Internet Archive - Handling resolutions and aspect ratio of common mobile devices for web, application and game development](http://web.archive.org/web/20160120225253/http://rusticode.com/2014/01/11/handling-resolutions-and-aspect-ratio-of-common-mobile-devices-for-web-application-and-game-development/)
-+ [Unity Manual - Rect Transform](https://docs.unity3d.com/Manual/class-RectTransform.html)
-+ [Unity Manual - Canvas Scaler](https://docs.unity3d.com/Manual/script-CanvasScaler.html)
+The Lizard is the default attacker trying to invade the garden. It moves quickly, and does high damage. However, its attack speed is slow and a Cactus can kill a single Lizard. Lizards can spawn randomly about every five seconds, making them the most common enemy you face as well.
 
-### Alternative Music Manager ###
+_Fox – HP 50 / AP 5_
 
-+ An alternative MusicManager.cs architecture
-+ Customise your Win and Loose scenes.
-+ Test it all looks and sounds good.
+The Fox is a sly attacker, which you will face beginning in level 2. It moves slow towards the garden, but has the additional ability to be able to jump over protective Gravestones and attack what is behind them. While its low damage makes it more manageable to deal with, don’t lose sight of these attackers because they can become difficult to handle.
 
-### Menus, Options & Music ###
+## Game Critique ##
 
-+ Customise Win and Loose Scenes.
-+ Add a new Options scene (blank for now).
-+ Add two buttons: “Back”, “Defaults”.
-+ Make Level_01 with “Win” and “Loose” buttons.
-+ Test all the navigation and music works properly.
+I hope you got a chance to play the game and understand the mechanics. Overall, I would love to hear your feedback. Feel free to reach out to me on Twitter @mjgillis and let me know what you think. Ultimately, I’m here to learn and improve. I think having your work reviewed and receiving feedback is paramount to growth. So now that I have that out of the way let me walk through the areas I think can be improved: explaining game mechanics in-game, animations, overall game polish.
 
-### Adding Fade Transitions ###
+Since, I’m in the early days of my game development journey, I’m going to leave these opportunities on the table and move on to learning the next game and picking up new mechanics. However, I think pointing out the areas of opportunity will help shape my thinking and work to not make them again in future games.
 
-+ Adding a nice fade-in to the Start Scene.
-+ Giving-up on spelling loose / lose / whatever.
-+ Add background image to levels.
-+ Check it all flows / scales nicely.
+#### Explaining Game Mechanics ####
 
-### Scaling Level Backgrounds ###
+I think the biggest usability issue with the game is how poorly the in-game mechanics are explained to the user. Once you hit play you are thrown into a scene where Lizards spawn and you are not given any instruction. Therefore, the only way to learn is by losing and slowing understanding how not to lose. Which, doesn’t generally bring about the most satisfying gameplay.
 
-+ Canvas Scaler “Screen Match Mode”.
-+ Use a “Raw Image” & grass texture.
-+ Define play space, and quiet zones.
-+ Setup our Level with prefabs.
+In terms of specific opportunities to improve, I think having some notifier or intro animation that explains that the objective of the game is to stop the spawning attackers from reaching the garden on the left side of the screen. Maybe a short video of in-game action showing people trying to stop attackers would suffice. I think there are a lot of possibilities for how that could work, which would be interesting to hear from others what they would do. However, I think we would all agree that there is a missing component of explaining even this relatively simple game.
 
-### Introducing PlayerPrefs ###
+Additionally, there are missing elements of the game that show current state of the attackers and defenders, making it difficult to make decisions and understand elements of the game. For instance, you cannot tell the amount of health each defender has throughout the game. It would be super helpful making decisions where to place defenders if you knew how much health each had left actively during the game, either through a slider or a numeric value displayed on screen. This is similar for attackers and damage being done between attackers and defenders. It would be very helpful to more visually see these components of the game.
 
-A brief talking-head video where Ben Tristem introduces how to use PlayerPrefs
-in Unity.
+I’m sure there are other in-game mechanic improvements that can be made, but those are the ones that immediately came to mind.
 
-### Our PlayerPrefsManager.cs ###
+#### Animations #### 
 
-+ What is PlayerPrefs, and why is it useful?
-+ Limitations of PlayerPrefs
-+ Why we're providing our own wrapper class.
-+ Create PlayerPrefsManager.cs static wrapper.
+This is my first experience using animations in Unity, so my expectations were fairly low on my skillset. I think I delivered on those low expectations, and will talk more about what I was able to accomplish in the lessons learned. However, there are areas that can be improved to make the gameplay more smooth. Most obvious is the Cactus animation has a weird flash that I wasn’t able to debug. I also think my animation transitions are overly rough. I’m not sure how to improve the timing of those, but am hoping to learn more in future games to make it look more realistic and not so obvious.
 
-### Our PlayerPrefsManager - part 2 ###
+#### Game Polish ####
+The final area I think could be improved is overall game polish. I was very lucky to have great art and music from the folks over at Glitch, but I don’t think I was able to use it with the polish quality I hope to have in the future. I think my priority as I start learning is to understand core mechanics like I’ll discuss in the Lessons Learned section, and as I’m able to add more skills I’ll focus on the polish and user experience within the game.
 
-Ben recaps where we are, and continues building the PlayerPrefsManager.
+## Lessons Learned ##
 
-### UI Sliders For Options ###
+Here is where I reflect back and think about the key learnings I had when building this game and the things I’ll be able to take with me in building my next game. The key things I learned while building this game were: world units and aspect ratios, playerprefs, animation, and scripting.
 
-+ Introducing UI sliders.
-+ Add volume and difficulty sliders.
-+ Create OptionsController.cs.
-+ Ensure sliders work.
+#### World Units ####
 
-### Sprite Sheet Animation ###
+One of the initial things I learned when building this game was creating a scene that related to world units and was designed for a specific aspect ratio. While having similar experience in web design, it was helpful to learn how this works when designing a game in Unity. I think this is a simple concept, but one that is easy to forget and can cause a real headache if not done properly. Setting the attacker lanes and spawning attackers all became much easier with a set world unit that fit within a specific aspect ratio.
 
-+ The sprite sheet (AKA sprite atlas).
-+ Comparison to bone-based animation.
-+ Importing & slicing sprite sheets.
-+ Making your first animation.
+#### PlayerPrefs ####
 
-### Ratio Math Primer ###
+Using PlayerPrefs to set global, persistent variables was very valuable to learn. However, the true lesson was the creation of a PlayerPrefs manager that handled reading and writing to the PlayerPrefs. This ensured that I was handling all changes with one scripting object and not doing those read/writes from gameplay scripts. This seems like another small and probably obvious lesson for the more experienced, but it this scalability thinking that will continue to help me as I design games in the future.
 
-+ The fundamentals of ratio math(s). 
-+ What screen aspect ratios mean.
-+ How to convert between different aspects.
+#### Animation ####
 
-### World Space UI Canvas ###
+This was a critical lesson for me in this game. Having no experience in Unity animation I was able to pick up the basics on how to do sprite animation as well as skeletal animation. Included in this was being able to create scriptable transitions, scriptable event markers, and different animation states. The Unity UI was a bit confusing at first, and I still am not a huge fan that I cannot work on animation using a prefab, but require the object to be within the scene. However, starting from a blank slate, I feel like I took a lot away from this project in the area of animation and am excited about building upon this foundation.
 
-+ Change to world space canvas for levels.
-+ Adjust grass tiling (using UV Rect).
-+ Add temporary “Core Game” panel.
-+ Translate & scale the level canvas.
-+ Adjust & prefab the camera.
+#### Scripting ####
 
-### The Animation Controller ###
+This is a generic bucket of scripting lessons. Here I was able to learn a lot of syntax and concepts for achieving results using scripts on objects. However, I think the biggest takeaway was around scripting design as it related to gameplay interaction. Doing things like creating defender and attacker classes that managed the majority of the scripting behaviors for defenders and attackers.
 
-+ How animators, states & motion clips relate
-+ Adding multiple animation states & clips.
-+ Options for transitioning between them.
-+ Again, only animate one character for now.
+While the solution seems obvious when it was presented, looking back on how I would have designed the game would have been way less efficient. I would have created scripts that managed behavior for each of the characters, instead of factoring all the common behaviors together and only using character level scripts when absolutely necessary. I’m now trying to think about factoring in game behavior in the simplest way possible when thinking about scripting game design. I think I’m going to be far from perfect here and I look forward to learning more and experiencing more as I build more games.
 
-### Texture Size & Compression ###
+## Final Thoughts ##
 
-+ Why my Lizard animation looked fuzzy.
-+ What to do about it.
-+ Max texture size for mobile devices.
-+ A bit about MIP Mapping while we're here.
-
-**Useful Links**  
-
-+ [Mobile Max Texture Size](http://answers.unity3d.com/questions/563094/mobile-max-texture-size.html)
-+ [TexturePacker - Create Sprite Sheets for your game!](https://www.codeandweb.com/texturepacker)
-+ [ShoeBox](http://renderhjs.net/shoebox/)
-+ [Glitch the Game](http://www.glitchthegame.com/public-domain-game-art/)
-
-### Using Gimp To Slice Images ###
-
-+ Introducing “bone based animation”.
-+ Using Gimp on Mac or PC to slice images\*
-+ How to import and set pivot points.
-
-
-_* Same principles apply to any other image editor._
-
-### 2D “Bone-Based” Animation ###
-
-+ Animating Position, Rotation and Scale.
-+ Challenge: create your bone animation(s).
-
-### Animating Our Lizard ###
-
-+ Different ways of animating objects
-+ Different ways of moving transforms
-+ Options for combining these.
-
-### Animating Our Cactus ###
-
-+ Animating the cactus from scratch
-+ Re-capping the 5-step process.
-
-### Finishing Our Defenders ###
-
-+ Finishing the defender animations
-+ How to make a sprite face the other way.
-
-### Finishing Our Attackers ###
-
-+ Finish our attackers
-+ How to access our code on GitHub.
-
-### Projectile Animation ###
-
-+ Giving our projectiles rotation in the animator.
-+ Giving them translation from the animator\*
-+ Seeing the combined motion.
-
-_\* We will change translation to script later._
-
-**Useful Links**
-
-+ [GameBucket.io](http://www.gamebucket.io/)
-
-### Using Unity Remote ###
-
-+ What's Unity Remote and why's it useful.
-+ Unity Remote 4 on app stores (iOS and Android)
-+ How to use it.
-+ It's limitations.
-
-**Useful Links**  
-
-+ [Unity Manual - Remote 4](https://docs.unity3d.com/Manual/UnityRemote4.html)
-
-### Review & Improvements ###
-
-+ Read music volume on load, improve Win & Lose.
-+ Catch 1st order error with **autoLoadLevelAfter().**
-+ Alternative fade without coding (thank Ryan).
-+ Save our scene of sprites & prefab everything.
-+ Our current project state is attached.
-
-### Moving Attackers From Script ###
-
-+ Create an Attacker.cs component.
-+ Why this component model is useful.
-+ Tune our animation to avoid “moon walking”.
-
-### Collision Matrix In Script ###
-
-+ Using **OnTriggerEnter2D (Collider2D collider).**
-+ Why we are using triggers not physics.
-+ Why we won't use the collision matrix this time.
-+ Adding appropriate colliders to all objects.
-
-### Using Animation Events ###
-
-+ The “what” and “why” of animation events.
-+ What methods can be called, and what can't.
-+ Modify Attacker.cs to accept speed events.
-+ Get animation transitions working for all attackers.
-+ Add “wishful” StrikeCurrentTarget() method.
-
-### Components “vs” Inheritance ###
-
-+ The different approaches to abstraction.
-+ The benefits of a component model.
-+ Get **StrikeCurrentTarget()** working.
-
-### Using A Health Component ###
-
-+ Why a separate component makes sense.
-+ Create & attach **Health.cs** component.
-+ Test destruction, and initial play tuning.
-
-### Animating Defenders & Projectiles ###
-
-+ Three approaches to 2D projectile animation.
-+ Separate defenders from their projectiles.
-+ Animate projectile using script **and** animator.
-+ Fix-up defender animation states.
-
-### Animator Firing Projectiles ###
-
-+ Why fire by animation events.
-+ Create **Shooter.cs** for shooting defenders.
-+ Create **FireGun()** method in Shooter class.
-+ Attach a gun gameObject to spawn projectiles.
-+ Arrange for animator to fire projectiles.
-
-### Separate Attack & Fire States ###
-
-+ Why our Gnome fires too fast.
-+ Possible solutions to this type of issue.
-+ Why we choose to create a “fire” state.
-+ Fine-tune projectile size & spawn position.
-
-### Handling Projectile Damage ###
-
-+ Make projectiles damage **Attacker** with **Health**.
-+ Setup a play space, and start tuning.
-+ Tweak damage and health levels.
-+ We'll play tune again later.
-
-### “Tower” Selector Buttons ###
-
-+ Setting up buttons for defender (tower) selection.
-+ Initially they just toggle sprite colour.
-+ Setup **DefenderSelector.selectedDefender** static
-+ Test that static is set at start, and on button press.
-
-(Unique Video Reference: 33_GG_CUD)
-
-### Creating When Needed ###
-
-+ The problem with the Projectiles placeholder.
-+ Useful blog article on best practices\*
-+ A pattern for checking and creating.
-
-**Useful Links**  
-+ \* [Blog - Unity3D Best Practices](http://www.glenstevens.ca/unity3d-best-practices/)
-
-### Spawn Defenders To Grid ###
-
-+ Ensure existing defenders' colliders mask square.
-+ Calculate the world-units position of a click.
-+ Calculate the nearest play-space grid centre.
-+ Spawn the currently selected defender there.
-
-### Enemy Spawning & Flow ###
-
-+ Place enemy spawners.
-+ Decide how spawning is controlled.
-+ A word about the Flow Channel\*
-+ Write script(s) to control spawning.
-
-**Useful Links**  
-
-+ \* [Game Theory Applied: The Flow Channel](http://indiedevstories.com/2011/08/10/game-theory-applied-the-flow-channel/)
-
-### Shooters Detect Attackers ###
-
-+ Find a way of defenders detecting attackers.
-+ Only shoot at attackers if ahead in lane.
-+ Modify **Shooter.cs** to make this work.
-+ Test that defender enter and leave “attack” state.
-
-### Using Stars As Currency ###
-
-+ Add a sun scoreboard to the game space.
-+ Star Trophy animation calls script to add sun.
-+ Write **StarDisplay.cs** class to update scoreboard.
-+ Write **defender.AddStars(int amount)** method.
-+ Wire these scripts together.
-
-### Spending Star Currency ###
-
-+ Assign a star cost to every defender.
-+ Prevent placement until you can afford it.
-+ Spend stars when defenders are placed.
-+ Use an **enum**eration to pass meaning.
-+ Rough play tuning to create a challenge.
-
-### Handle Lose Condition ###
-
-+ Remove lose test button.
-+ Create a lose collider.
-+ Setup lose triggering & transition.
-+ Improve lose screen.
-
-### UI Slider Level Timer ###
-
-+ Create a UI slider to visually show level progress.
-+ Make the slider to “count down” to level end.
-+ When time runs out…
-+ Show “You Survived” text, and play a sound.
-+ Auto-load next level.
-
-### Review & Tidy Up ###
-
-+ Tidy **Spawner.cs > isTimeToSpawn()**
-+ Adjust colliders so attackers hit defenders.
-+ Fix the gravestone animation transitions.
-+ Creates prefabs of our work.
-
-### Play Testing & Tuning ###
-
-+ Display the defender cost on buttons.
-+ Tweak the spawn frequency of attackers.
-+ Adjust the health of attackers & defenders.
-+ Choose amount of damage for projectiles.
-+ Play and make sure it's a challenge.
-
-### Installing Android Studio ###
-
-+ Downloading & installing Android Studio.
-+ How to solve common issues.
-+ Check Android Studio loads.
-
-**Useful Links**  
-+ [Android Studio](https://developer.android.com/studio/index.html)
-
-### Building To Android ###
-
-+ Setting up Build Settings for Android.
-+ Deploying to Android device\*
-+ Play testing on the device.
-
-_\* You'll need a device connected with a USB cable._
-
-### Build To iOS Simulator ###
-
-+ Setup Build Settings in Unity.
-+ Build to iOS simulator (Mac “needed”).
-+ To build to physical device you “need” a dev kit.
-+ Briefly play-test, and note improvements.
-+ Share your creation with the world.
-
-### User Testing Tweaks ###
-
-+ Simplify by removing **SetStartVolume.cs**\*
-+ Destroy tagged game objects on Win condition.
-+ … this also solves the “You Win” issue.
-+ Add a simple STOP button to game.
-
-_\* Thanks to Marko for suggesting this._
-
-### GG Unity 5 & Web GL Sharing (Optional) ###
-
-+ Upgrade to Unity 5.
-+ About Web GL builds.
-+ Build for Web GL and share.
-
-### DOWNLOAD Section 7 Unity Project ###
-
-
-
-### Section 7 Wrap Up ###
+For those of you who are wondering, the training class I’m using is the Unity GameDev.tv class on Udemy. You can find the specific class here, but also worth checking out GameDev.tv. I’m a huge fan of the course because it moves at just the right pace for me and I love the challenge structure to teach you enough to try and figure something out on your own, then if you get stuck you can watch them show you how they would do it.
